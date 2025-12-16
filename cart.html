@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savoria - Cart</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .cart-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding: 1rem 0;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-qty {
+            background: #eee;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-qty:hover {
+            background: #ddd;
+        }
+
+        .cart-summary {
+            margin-top: 2rem;
+            text-align: right;
+            border-top: 2px solid #eee;
+            padding-top: 1rem;
+        }
+
+        .total-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        /* Payment Demo Modal Style */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 500px;
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .payment-btn {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        .payment-btn:hover, .payment-btn.selected {
+            border-color: var(--primary-color);
+            background-color: var(--secondary-color);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">Savoria</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="cart.html" style="color: var(--primary-color);"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">Your Order</h2>
+        <div class="cart-wrapper">
+            <div id="cart-items">
+                <!-- Cart Items will be injected here -->
+            </div>
+
+            <div class="cart-summary">
+                <p>Total: <span class="total-price">$<span id="cart-total">0.00</span></span></p>
+                <br>
+                <button class="btn btn-primary" onclick="openPaymentModal()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Demo Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePaymentModal()">&times;</span>
+            <h3>Select Payment Method</h3>
+            <p style="font-size: 0.8rem; color: #777;">(Demo Only - No real payment processing)</p>
+
+            <div class="payment-options">
+                <button class="payment-btn" onclick="selectPayment('UPI')"><i class="fas fa-mobile-alt"></i> UPI / GPay / PhonePe</button>
+                <button class="payment-btn" onclick="selectPayment('Card')"><i class="far fa-credit-card"></i> Credit / Debit Card</button>
+                <button class="payment-btn" onclick="selectPayment('COD')"><i class="fas fa-money-bill-wave"></i> Cash on Delivery</button>
+            </div>
+
+            <div id="payment-confirm-section" style="display:none;">
+                <p>Payment Method: <span id="selected-method" style="font-weight:bold;"></span></p>
+                <br>
+                <button class="btn btn-whatsapp" onclick="checkout()"><i class="fab fa-whatsapp"></i> Confirm Order on WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Savoria Restaurant. All rights reserved.</p>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        const modal = document.getElementById("paymentModal");
+
+        function openPaymentModal() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            modal.style.display = "block";
+        }
+
+        function closePaymentModal() {
+            modal.style.display = "none";
+            document.getElementById('payment-confirm-section').style.display = 'none';
+        }
+
+        function selectPayment(method) {
+            document.getElementById('selected-method').textContent = method;
+            document.getElementById('payment-confirm-section').style.display = 'block';
+
+            // Visual feedback
+            document.querySelectorAll('.payment-btn').forEach(btn => btn.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closePaymentModal();
+            }
+        }
+    </script>
+</body>
+</html>
