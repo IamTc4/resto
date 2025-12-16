@@ -136,7 +136,7 @@ function renderMenu() {
                     <p>${item.description}</p>
                     <div class="menu-footer">
                         <span class="price">$${item.price.toFixed(2)}</span>
-                        <button class="btn btn-primary btn-sm" onclick="addToCart(${item.id})">Add</button>
+                        <button class="btn btn-primary btn-sm" onclick="addToCart(${item.id})">Add to Order</button>
                     </div>
                 </div>
             `;
@@ -198,17 +198,16 @@ function checkout() {
     }
 
     const phoneNumber = "1234567890"; // Replace with restaurant's number
-    let message = "Hello, I would like to place an order:%0A%0A";
+    let message = "Hello, I’d like to order:%0A";
     let total = 0;
 
     cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
-        message += `${item.quantity}x ${item.name} - $${itemTotal.toFixed(2)}%0A`;
+        message += `- ${item.name} x${item.quantity}%0A`;
     });
 
-    message += `%0A*Total: $${total.toFixed(2)}*`;
-    message += "%0A%0APlease confirm my order.";
+    message += `Total: $${total.toFixed(2)}`;
 
     // Save order for data analysis
     saveOrder(total);
@@ -219,17 +218,13 @@ function checkout() {
     updateCartCount();
     renderCart();
 
-    // Redirect
+    // Redirect to WhatsApp
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
 
-    // Close modal if open (for cart page)
-    const paymentModal = document.getElementById('paymentModal');
-    if (paymentModal) {
-        paymentModal.style.display = 'none';
-        // Hide the confirmation section too
-        const confirmSection = document.getElementById('payment-confirm-section');
-        if (confirmSection) confirmSection.style.display = 'none';
-    }
+    // Redirect current tab to Thank You page after a short delay
+    setTimeout(() => {
+        window.location.href = 'thankyou.html';
+    }, 1000);
 }
 
 // Save Order to History (Mock Backend)

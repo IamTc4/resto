@@ -163,6 +163,45 @@ function renderCharts(orders) {
             responsive: true
         }
     });
+
+    // Top Items (Bar Chart)
+    const itemCounts = {};
+    orders.forEach(order => {
+        order.items.forEach(item => {
+            itemCounts[item.name] = (itemCounts[item.name] || 0) + item.quantity;
+        });
+    });
+
+    // Sort by count
+    const sortedItems = Object.entries(itemCounts)
+        .sort(([,a], [,b]) => b - a)
+        .slice(0, 5); // Top 5
+
+    const topItemsCtx = document.getElementById('topItemsChart').getContext('2d');
+    new Chart(topItemsCtx, {
+        type: 'bar',
+        data: {
+            labels: sortedItems.map(([name]) => name),
+            datasets: [{
+                label: 'Units Sold',
+                data: sortedItems.map(([,count]) => count),
+                backgroundColor: 'rgba(39, 174, 96, 0.6)',
+                borderColor: '#27AE60',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            }
+        }
+    });
 }
 
 function renderTable(orders) {

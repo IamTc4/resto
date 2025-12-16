@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Thank you for ordering from Savoria. Your delicious meal is on its way!">
+    <title>Savoria - Thank You</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .thank-you-container {
+            text-align: center;
+            padding: 4rem 1rem;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .check-icon {
+            font-size: 5rem;
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">Savoria</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container thank-you-container">
+        <i class="fas fa-check-circle check-icon"></i>
+        <h1 class="section-title">Thank You for Your Order!</h1>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem; max-width: 600px;">
+            Your order has been drafted in WhatsApp. Please send the message to confirm your order with our team.
+        </p>
+        <p style="color: var(--text-light); margin-bottom: 2rem;">
+            We will start preparing your fresh meal as soon as we receive your confirmation.
+        </p>
+
+        <div>
+            <a href="index.html" class="btn btn-primary">Back to Home</a>
+            <a href="menu.html" class="btn" style="border: 1px solid var(--primary-color); color: var(--primary-color); margin-left: 10px;">Order More</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Savoria Restaurant. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

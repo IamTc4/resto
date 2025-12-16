@@ -17,6 +17,10 @@
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: var(--font-family);
     background-color: var(--secondary-color);
@@ -101,12 +105,13 @@ nav a:hover {
 /* Buttons */
 .btn {
     display: inline-block;
-    padding: 0.8rem 1.5rem;
+    padding: 1rem 1.8rem; /* Increased padding for touch targets */
     border-radius: var(--border-radius);
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.2s, background-color 0.2s;
     border: none;
+    font-size: 1rem;
 }
 
 .btn-primary {
@@ -173,10 +178,12 @@ footer {
     z-index: 999;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     border-radius: 50px;
-    padding: 10px 20px;
+    padding: 15px 25px; /* Larger hit area */
     display: flex;
     align-items: center;
     gap: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
 }
 
 /* Responsive */
@@ -189,9 +196,14 @@ footer {
         display: block;
     }
 
-    /* Simple mobile menu handling would require JS, sticking to simple list for now or hiding */
     nav ul {
-        /* keeping it simple for MVP, maybe wrap or stack */
         font-size: 0.9rem;
+    }
+
+    /* Ensure Sticky Button spans width on very small screens if desired, or just stays right */
+    .sticky-whatsapp {
+        bottom: 20px;
+        right: 20px;
+        left: auto;
     }
 }
