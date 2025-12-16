@@ -61,18 +61,29 @@
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="menu.html">Menu</a></li>
-                <li><a href="dashboard.html" style="color: var(--primary-color);">Dashboard</a></li>
+                <li><a href="index.html#menu">Menu</a></li>
                 <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a></li>
             </ul>
         </nav>
     </header>
 
-    <div class="container">
+    <div class="container" id="login-section">
+        <h2 class="section-title">Admin Login</h2>
+        <div style="max-width: 400px; margin: 0 auto; text-align: center; background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <p style="margin-bottom: 1rem;">Enter password to access dashboard</p>
+            <input type="password" id="admin-password" placeholder="Password" style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+            <button class="btn btn-primary" onclick="checkLogin()" style="width: 100%;">Login</button>
+            <p id="login-error" style="color: red; margin-top: 1rem; display: none;">Invalid Password</p>
+            <p style="color: #ccc; font-size: 0.8rem; margin-top: 1rem;">(Hint: admin123)</p>
+        </div>
+    </div>
+
+    <div class="container" id="dashboard-content" style="display: none;">
         <h2 class="section-title">Admin Dashboard</h2>
 
         <div class="data-controls">
             <button class="btn btn-primary btn-sm" onclick="resetData()">Reset Demo Data</button>
+            <button class="btn btn-sm" style="background: #e74c3c; color: white;" onclick="logout()">Logout</button>
         </div>
 
         <!-- Key Metrics -->
@@ -139,5 +150,44 @@
 
     <script src="assets/js/main.js"></script>
     <script src="assets/js/dashboard.js"></script>
+    <script>
+        // Simple Auth Logic
+        function checkSession() {
+            if (sessionStorage.getItem('isAdmin') === 'true') {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('dashboard-content').style.display = 'block';
+                // Trigger chart rendering if needed, though dashboard.js runs on DOMContentLoaded
+                // We might need to ensure charts render properly if they were hidden
+            } else {
+                document.getElementById('login-section').style.display = 'block';
+                document.getElementById('dashboard-content').style.display = 'none';
+            }
+        }
+
+        function checkLogin() {
+            const password = document.getElementById('admin-password').value;
+            if (password === 'admin123') {
+                sessionStorage.setItem('isAdmin', 'true');
+                checkSession();
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('isAdmin');
+            checkSession();
+        }
+
+        // Run check on load
+        checkSession();
+
+        // Enter key support
+        document.getElementById('admin-password').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkLogin();
+            }
+        });
+    </script>
 </body>
 </html>

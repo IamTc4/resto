@@ -54,10 +54,17 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 // Update Cart Count in UI
 function updateCartCount() {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
     const countElement = document.getElementById('cart-count');
     if (countElement) {
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
         countElement.textContent = totalItems;
+    }
+
+    const stickyCountElement = document.getElementById('sticky-cart-count');
+    if (stickyCountElement) {
+        stickyCountElement.textContent = totalItems;
+        // Optionally hide if 0? But requested to be sticky bottom button
     }
 }
 
@@ -240,6 +247,12 @@ function saveOrder(total) {
 
     orderHistory.push(newOrder);
     localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+}
+
+// Toggle Mobile Menu
+function toggleMobileMenu() {
+    const nav = document.getElementById('nav-menu');
+    nav.classList.toggle('active');
 }
 
 // Initialize
