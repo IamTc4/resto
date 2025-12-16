@@ -253,6 +253,12 @@ function saveOrder(total) {
 function toggleMobileMenu() {
     const nav = document.getElementById('nav-menu');
     nav.classList.toggle('active');
+
+    const btn = document.querySelector('.mobile-menu-btn');
+    if (btn) {
+        const isExpanded = nav.classList.contains('active');
+        btn.setAttribute('aria-expanded', isExpanded);
+    }
 }
 
 // Initialize
