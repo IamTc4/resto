@@ -75,6 +75,10 @@ nav a:hover {
     display: none;
     font-size: 1.5rem;
     cursor: pointer;
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 0;
 }
 
 /* Hero Section */
