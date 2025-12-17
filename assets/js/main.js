@@ -1,10 +1,11 @@
-const menuItems = [
+// Default Menu Items with fixed images
+const defaultMenuItems = [
     {
         id: 1,
         name: "Crispy Spring Rolls",
         category: "Starters",
         price: 5.99,
-        image: "https://images.unsplash.com/photo-1544681280-d21c51932463?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        image: "https://placehold.co/500x300?text=Spring+Rolls",
         description: "Vegetables wrapped in a crispy pastry."
     },
     {
@@ -12,7 +13,7 @@ const menuItems = [
         name: "Grilled Chicken Salad",
         category: "Starters",
         price: 8.50,
-        image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        image: "https://placehold.co/500x300?text=Chicken+Salad",
         description: "Fresh greens with grilled chicken breast."
     },
     {
@@ -20,7 +21,7 @@ const menuItems = [
         name: "Classic Burger",
         category: "Main Course",
         price: 12.99,
-        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        image: "https://placehold.co/500x300?text=Classic+Burger",
         description: "Juicy beef patty with lettuce, tomato, and cheese."
     },
     {
@@ -28,7 +29,7 @@ const menuItems = [
         name: "Spaghetti Carbonara",
         category: "Main Course",
         price: 14.50,
-        image: "https://images.unsplash.com/photo-1612874742237-982e9657ade9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        image: "https://placehold.co/500x300?text=Carbonara",
         description: "Traditional Italian pasta with egg, cheese, and bacon."
     },
     {
@@ -36,7 +37,7 @@ const menuItems = [
         name: "Chocolate Lava Cake",
         category: "Desserts",
         price: 6.99,
-        image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        image: "https://placehold.co/500x300?text=Lava+Cake",
         description: "Warm chocolate cake with a molten center."
     },
     {
@@ -44,10 +45,19 @@ const menuItems = [
         name: "Fresh Fruit Smoothie",
         category: "Drinks",
         price: 4.99,
-        image: "https://images.unsplash.com/photo-1505252585461-04db1eb84625?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        image: "https://placehold.co/500x300?text=Fruit+Smoothie",
         description: "Blend of seasonal fruits."
     }
 ];
+
+// Load Menu Items from LocalStorage or use default
+let menuItems = JSON.parse(localStorage.getItem('menuItems')) || [];
+
+// Initialize if empty (first run)
+if (menuItems.length === 0) {
+    menuItems = defaultMenuItems;
+    localStorage.setItem('menuItems', JSON.stringify(menuItems));
+}
 
 // Load Cart from LocalStorage
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -64,7 +74,6 @@ function updateCartCount() {
     const stickyCountElement = document.getElementById('sticky-cart-count');
     if (stickyCountElement) {
         stickyCountElement.textContent = totalItems;
-        // Optionally hide if 0? But requested to be sticky bottom button
     }
 }
 
@@ -89,7 +98,6 @@ function removeFromCart(id) {
     cart = cart.filter(item => item.id !== id);
     saveCart();
     updateCartCount();
-    // If we are on the cart page, we might want to re-render the cart list
     if (window.location.pathname.includes('cart.html')) {
         renderCart();
     }
@@ -120,6 +128,14 @@ function saveCart() {
 function renderMenu() {
     const menuContainer = document.getElementById('menu-container');
     if (!menuContainer) return;
+
+    // Refresh menuItems from localStorage to get latest updates
+    const storedItems = JSON.parse(localStorage.getItem('menuItems'));
+    if (storedItems && storedItems.length > 0) {
+        menuItems = storedItems;
+    }
+
+    menuContainer.innerHTML = ''; // Clear existing content
 
     const categories = [...new Set(menuItems.map(item => item.category))];
 

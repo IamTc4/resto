@@ -226,4 +226,47 @@ function renderTable(orders) {
     });
 }
 
+// Add New Dish
+function addDish() {
+    const name = document.getElementById('dish-name').value;
+    const category = document.getElementById('dish-category').value;
+    const price = parseFloat(document.getElementById('dish-price').value);
+    const image = document.getElementById('dish-image').value || `https://placehold.co/500x300?text=${encodeURIComponent(name)}`;
+    const description = document.getElementById('dish-desc').value;
+
+    if (!name || !price) {
+        alert("Name and Price are required!");
+        return;
+    }
+
+    let menuItems = JSON.parse(localStorage.getItem('menuItems')) || [];
+
+    // Create new ID (max existing ID + 1)
+    const maxId = menuItems.reduce((max, item) => (item.id > max ? item.id : max), 0);
+    const newId = maxId + 1;
+
+    const newDish = {
+        id: newId,
+        name: name,
+        category: category,
+        price: price,
+        image: image,
+        description: description
+    };
+
+    menuItems.push(newDish);
+    localStorage.setItem('menuItems', JSON.stringify(menuItems));
+
+    alert("Dish added successfully!");
+
+    // Clear form
+    document.getElementById('dish-name').value = '';
+    document.getElementById('dish-price').value = '';
+    document.getElementById('dish-image').value = '';
+    document.getElementById('dish-desc').value = '';
+
+    // Note: main.js needs to reload or re-read localStorage to see this change.
+    // If the admin is also on the dashboard, they might not see it immediately on the home page unless they refresh.
+}
+
 document.addEventListener('DOMContentLoaded', updateDashboard);

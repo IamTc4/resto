@@ -86,6 +86,24 @@
             <button class="btn btn-sm" style="background: #e74c3c; color: white;" onclick="logout()">Logout</button>
         </div>
 
+        <!-- Add New Dish Section -->
+        <div class="container" style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 2rem;">
+            <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Add New Dish</h3>
+            <form onsubmit="event.preventDefault(); addDish();" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <input type="text" id="dish-name" placeholder="Dish Name" required style="padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px;">
+                <select id="dish-category" style="padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px;">
+                    <option value="Starters">Starters</option>
+                    <option value="Main Course">Main Course</option>
+                    <option value="Desserts">Desserts</option>
+                    <option value="Drinks">Drinks</option>
+                </select>
+                <input type="number" id="dish-price" placeholder="Price" step="0.01" required style="padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px;">
+                <input type="text" id="dish-image" placeholder="Image URL (optional)" style="padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px;">
+                <input type="text" id="dish-desc" placeholder="Description" style="padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px; grid-column: 1 / -1;">
+                <button type="submit" class="btn btn-primary" style="grid-column: 1 / -1;">Add Dish</button>
+            </form>
+        </div>
+
         <!-- Key Metrics -->
         <div class="dashboard-grid">
             <div class="stat-card">
