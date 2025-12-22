@@ -220,7 +220,7 @@ function checkout() {
         return;
     }
 
-    const phoneNumber = "1234567890"; // Replace with restaurant's number
+    const phoneNumber = "7021975373"; // Replace with restaurant's number
     let message = "Hello, I’d like to order:%0A";
     let total = 0;
 
