@@ -1,0 +1,7 @@
+module.exports = {
+    ORDER: 'ORDER',
+    BROWSE_MENU: 'BROWSE_MENU',
+    TRACK_ORDER: 'TRACK_ORDER',
+    COMPLAINT: 'COMPLAINT',
+    GENERAL_QUERY: 'GENERAL_QUERY'
+};
