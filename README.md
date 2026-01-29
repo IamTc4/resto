@@ -1,26 +1,31 @@
-# Restaurant Website – Online Ordering with Data Analysis
+# RestaurantBot AI - Full Stack Architecture
 
-This is a mobile-first restaurant website that supports online ordering via WhatsApp, basic e-commerce features, and a data analysis dashboard.
+This repository contains the full-stack architecture for **RestaurantBot AI**, an intelligent restaurant operations system.
+
+## Project Structure
+
+- **backend/**: Node.js/Express API with MongoDB support.
+- **frontend/**: React-based frontend structure (Web, Mobile, Admin).
+- **ai-core/**: Prompts, embeddings, and AI logic.
+- **database/**: Schema definitions and migrations.
+- **legacy_static_site/**: Previous static HTML prototype.
+
+## Getting Started
+
+### Backend
+
+1. Navigate to `backend/`
+2. Install dependencies: `npm install`
+3. Create `.env` from `.env.example`
+4. Run server: `npm start`
+
+### Frontend
+
+1. Navigate to `frontend/web/`
+2. (Requires React setup) Install dependencies and run.
 
 ## Features
 
-- **Mobile-first Design**: Optimized for speed and usability on mobile devices.
-- **Menu Showcase**: Categorized menu with images and prices.
-- **Online Ordering**: Add items to cart and order via WhatsApp.
-- **Payment Demo**: Simulated checkout experience.
-- **Data Analysis Dashboard**: Insights on orders, sales trends, and popular items.
-
-## Technologies
-
-- HTML5
-- CSS3
-- JavaScript (Vanilla)
-- Chart.js (for Data Analysis)
-- LocalStorage (for Cart and Data persistence)
-
-## How to Run
-
-1. Open `index.html` in your browser.
-2. Navigate through the menu, add items to the cart.
-3. Proceed to checkout to see the WhatsApp integration.
-4. Visit the `dashboard.html` to see the data analysis insights.
+- **Customer Support AI**: Intelligent chatbot logic.
+- **CRM Integration**: Customer classification and history.
+- **Menu Intelligence**: Recommendations based on dietary needs.
