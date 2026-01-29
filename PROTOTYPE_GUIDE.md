@@ -48,9 +48,13 @@ This guide explains how to run the RestaurantBot AI full-stack prototype locally
 - **AI Service**: `backend/services/ai/llm.service.js` currently contains a mock implementation. It responds to keywords like "menu" or "hello" without needing an API key.
 - **Database**: If MongoDB is not connected, the server will log a warning but continue running in a limited mode (depending on implementation).
 - **Authentication**: `auth.middleware.js` is currently non-blocking for prototype ease.
+- **Integrations**:
+  - WhatsApp, Payment, and Delivery services are mocked in `integrations/` and `backend/services/external/` to simulate behavior without real API keys.
+  - Notifications are logged to console.
 
 ## 4. Key Endpoints to Test
 
 - **Chat**: `POST /api/chat/send` - Send a message to the bot.
 - **Orders**: `POST /api/orders` - Create a mock order.
 - **Analytics**: `GET /api/analytics/daily` - View mock daily stats.
+- **Notifications**: `GET /api/notifications` - View mock notifications.
