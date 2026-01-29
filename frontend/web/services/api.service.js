@@ -1,38 +1,27 @@
-// Frontend API Service
-// Handles communication with the Backend
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
-
-class ApiService {
-
-    async sendMessage(message, context = {}) {
-        try {
-            const response = await fetch(`${API_BASE_URL}/chat/send`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message,
-                    context
-                    // TODO: Add customerId if logged in
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`API Error: ${response.status}`);
-            }
-
-            return await response.json();
-        } catch (error) {
-            console.error('ApiService Error:', error);
-            throw error;
-        }
+export const post = async (endpoint, data) => {
+    try {
+        const response = await fetch(`${API_URL}${endpoint}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+        return await response.json();
+    } catch (error) {
+        console.error('API Error:', error);
+        throw error;
     }
+};
 
-    // Placeholder for other methods
-    // async getMenu() { ... }
-    // async placeOrder(orderData) { ... }
-}
-
-export default new ApiService();
+export const get = async (endpoint) => {
+    try {
+        const response = await fetch(`${API_URL}${endpoint}`);
+        return await response.json();
+    } catch (error) {
+        console.error('API Error:', error);
+        throw error;
+    }
+};
